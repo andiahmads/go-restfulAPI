@@ -1,0 +1,202 @@
+openapi: '3.0.2'
+info:
+  title: Category RESTful API
+  description: API spec for category RESTful API
+  version: '1.0'
+servers:
+  - url: http://localhost:8080
+paths:
+  /categories:
+    get:
+      security:
+        - categoryAuth: []
+
+                  
+      tags:
+        - "category api"
+      description:
+        'list all categories'
+      summary:
+        list all categories
+      responses:
+        '200':
+          description: success get all category
+          content:
+            aplication/json:
+              schema:
+                type: 'object'
+                properties:
+                  code: 
+                     type: 'number'
+                  status:
+                   type: 'string'
+                  data:
+                   type: 'array'
+                   items:
+                    $ref: '#/components/schemas/Category'
+    post:
+      security:
+        - categoryAuth: []
+      tags:
+        - "category api"
+      description: create a new category
+      summary:
+        Create New Category
+      requestBody:
+        content:
+          aplication/json:
+            schema:
+              $ref: '#/components/schemas/createOrUpateCategory'
+              
+             
+      responses: 
+        '200':
+          description: success create Category
+          content:
+            aplication/json:
+              schema:
+                type: 'object'
+                properties:
+                  code:
+                    type: 'number'
+                  status:
+                    type: 'boolean'
+                  data:
+                    type: 'object'
+                    $ref: '#/components/schemas/Category'
+  
+  /categories/{categoryID}:
+    get:
+      security:
+        - categoryAuth: []
+      tags:
+        - "category api"
+      description:
+        'list all categories'
+      summary:
+        params with categoryID
+      parameters:
+        - name: categoryId
+          required:
+            true
+          in: path
+          description: category ID
+          schema:
+            type: integer 
+      responses:
+        '200':
+          description: success get all category
+          content:
+            aplication/json:
+              schema:
+                type: 'object'
+                properties:
+                  code: 
+                     type: 'number'
+                  status:
+                   type: 'string'
+                  data:
+                   type: 'array'
+                   items:
+                    $ref: '#/components/schemas/Category'
+    put:
+      security:
+        - categoryAuth: []
+      tags:
+        - "category api"
+      description:
+        'update category by id'
+      summary:
+        params with categoryID
+      parameters:
+        - name: categoryId
+          required:
+            true
+          in: path
+          description: category ID
+          schema:
+            type: integer 
+      requestBody:
+        content:
+          aplication/json:
+            schema:
+              $ref: '#/components/schemas/createOrUpateCategory'
+           
+      responses:
+        '200':
+          description: success upate category
+          content:
+            aplication/json:
+              schema:
+                type: 'object'
+                properties:
+                  code: 
+                     type: 'number'
+                  status:
+                   type: 'string'
+                  data:
+                   type: 'array'
+                   items:
+                    $ref: '#/components/schemas/Category'
+    delete:
+      security:
+        - categoryAuth: []
+      tags:
+        - "category api"
+      description:
+        'delete category by categoryID'
+      summary:
+        delete category by categoryID
+      parameters:
+        - name: categoryId
+          required:
+            true
+          in: path
+          description: category ID
+          schema:
+            type: integer 
+      responses:
+        '200':
+          description: success delete category
+          content:
+            aplication/json:
+              schema:
+                type: 'object'
+                properties:
+                  code: 
+                     type: 'number'
+                  status:
+                   type: 'string'
+                
+
+
+
+
+
+
+
+
+components:
+  securitySchemes:
+    categoryAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key  
+      
+  schemas:
+    createOrUpateCategory:
+      type: 'object'
+      properties:
+          name:
+            type: 'string'  
+    Category:
+      type: 'object'
+      properties:
+        id:
+         type: 'number'
+        name:
+          type: 'string'
+                 
+                        
+
+              
